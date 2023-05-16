@@ -24,7 +24,7 @@ resource "github_branch_protection" "main_branch_protection" {
   require_signed_commits          = true
   required_linear_history         = true
   require_conversation_resolution = true
-  allows_force_pushes             = var.allow_push_to_default_branch
+  allows_force_pushes             = var.allow_force_pushes_to_default_branch
   allows_deletions                = false
 
   required_pull_request_reviews {
@@ -32,27 +32,9 @@ resource "github_branch_protection" "main_branch_protection" {
   }
 }
 
-locals {
-  allowed_branch_patterns = [
-    "build/*",
-    "chore/*",
-    "ci/*",
-    "docs/*",
-    "feat/*",
-    "fix/*",
-    "perf/*",
-    "refactor/*",
-    "revert/*",
-    "style/*",
-    "test/*",
-  ]
-}
-
 resource "github_branch_protection" "other_branches_protection" {
-  for_each = toset(local.allowed_branch_patterns)
-
   repository_id                   = github_repository.repository.node_id
-  pattern                         = each.value
+  pattern                         = "(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)/.*"
   require_signed_commits          = true
   required_linear_history         = true
   require_conversation_resolution = true
