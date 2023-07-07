@@ -5,7 +5,7 @@ data "github_organization" "organization" {
 resource "github_repository" "repository" {
   name                   = var.github_repository
   description            = var.github_repository_description
-  visibility             = "public"
+  visibility             = var.github_repository_visibility
   auto_init              = true
   delete_branch_on_merge = true
   topics                 = var.github_repository_topics

@@ -10,6 +10,12 @@ variable "github_repository" {
   default     = false
 }
 
+variable "github_repository_visibility" {
+  description = "The repository visibility host the code within the organization"
+  nullable    = true
+  default     = "public"
+}
+
 variable "github_repository_topics" {
   type        = list(string)
   description = "The topics present on the repository"
